@@ -64,12 +64,6 @@
     endscript
 }
 
-/var/log/xferlog {
-    postrotate
-	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-    endscript
-}
-
 /var/log/mail/* {
     olddir /var/log/archiv/mail
     postrotate
