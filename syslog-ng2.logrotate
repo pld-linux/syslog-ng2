@@ -1,120 +1,120 @@
 /var/log/messages {
     prerotate
-    	/usr/bin/killall -TSTP klogd || :
+    	/bin/killall -TSTP klogd || :
     endscript
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/usr/bin/killall -CONT klogd || :
+	/bin/killall -CONT klogd || :
     endscript
 }
 
 /var/log/daemon {
     prerotate
-    	/usr/bin/killall -TSTP klogd || :
+    	/bin/killall -TSTP klogd || :
     endscript
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/usr/bin/killall -CONT klogd || :
+	/bin/killall -CONT klogd || :
     endscript
 }
 
 /var/log/debug {
     prerotate
-    	/usr/bin/killall -TSTP klogd || :
+    	/bin/killall -TSTP klogd || :
     endscript
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/usr/bin/killall -CONT klogd || :
+	/bin/killall -CONT klogd || :
     endscript
 }
 
 /var/log/iptables {
     prerotate
-    	/usr/bin/killall -TSTP klogd || :
+    	/bin/killall -TSTP klogd || :
     endscript
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/usr/bin/killall -CONT klogd || :
+	/bin/killall -CONT klogd || :
     endscript
 }
 
 /var/log/kernel {
     prerotate
-    	/usr/bin/killall -TSTP klogd || :
+    	/bin/killall -TSTP klogd || :
     endscript
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/usr/bin/killall -CONT klogd || :
+	/bin/killall -CONT klogd || :
     endscript
 }
 
 /var/log/lpr {
     prerotate
-    	/usr/bin/killall -TSTP klogd || :
+    	/bin/killall -TSTP klogd || :
     endscript
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/usr/bin/killall -CONT klogd || :
+	/bin/killall -CONT klogd || :
     endscript
 }
 
 /var/log/maillog {
     prerotate
-    	/usr/bin/killall -TSTP klogd || :
+    	/bin/killall -TSTP klogd || :
     endscript
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/usr/bin/killall -CONT klogd || :
+	/bin/killall -CONT klogd || :
     endscript
 }
 
 /var/log/secure {
     prerotate
-    	/usr/bin/killall -TSTP klogd || :
+    	/bin/killall -TSTP klogd || :
     endscript
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/usr/bin/killall -CONT klogd || :
+	/bin/killall -CONT klogd || :
     endscript
 }
 
 /var/log/spooler {
     prerotate
-    	/usr/bin/killall -TSTP klogd || :
+    	/bin/killall -TSTP klogd || :
     endscript
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/usr/bin/killall -CONT klogd || :
+	/bin/killall -CONT klogd || :
     endscript
 }
 
 /var/log/syslog {
     prerotate
-    	/usr/bin/killall -TSTP klogd || :
+    	/bin/killall -TSTP klogd || :
     endscript
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/usr/bin/killall -CONT klogd || :
+	/bin/killall -CONT klogd || :
     endscript
 }
 
 /var/log/user {
     prerotate
-    	/usr/bin/killall -TSTP klogd || :
+    	/bin/killall -TSTP klogd || :
     endscript
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/usr/bin/killall -CONT klogd || :
+	/bin/killall -CONT klogd || :
     endscript
 }
 
 /var/log/mail/* {
     prerotate
-    	/usr/bin/killall -TSTP klogd || :
+    	/bin/killall -TSTP klogd || :
     endscript
     olddir /var/log/archiv/mail
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/usr/bin/killall -CONT klogd || :
+	/bin/killall -CONT klogd || :
     endscript
 }
