@@ -1,0 +1,29 @@
+/var/log/messages {
+    postrotate
+	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
+    endscript
+}
+
+/var/log/secure {
+    postrotate
+	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
+    endscript
+}
+
+/var/log/maillog {
+    postrotate
+	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
+    endscript
+}
+
+/var/log/spooler {
+    postrotate
+	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
+    endscript
+}
+
+/var/log/kernel {
+    postrotate
+	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
+    endscript
+}
