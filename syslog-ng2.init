@@ -31,20 +31,20 @@ fi
 case "$1" in
   start)
 	# Check if the service is already running?
-	if [ ! -f /var/lock/subsys/syslog ]; then
+	if [ ! -f /var/lock/subsys/syslog-ng ]; then
 		msg_starting "syslog-ng"
 		daemon syslog-ng $OPTIONS
 		RETVAL=$?
-		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/syslog
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/syslog-ng
 	else
 		msg_Already_Running "syslog-ng"
 	fi
 	;;
     stop)	
-	if [ -f /var/lock/subsys/syslog ]; then
+	if [ -f /var/lock/subsys/syslog-ng ]; then
 		msg_stopping "syslog-ng"
 		killproc syslog-ng
-		rm -f /var/lock/subsys/syslog >/dev/null 2>&1
+		rm -f /var/lock/subsys/syslog-ng >/dev/null 2>&1
 	else
 		msg_Not_Running syslog-ng
 		exit 1
@@ -58,7 +58,7 @@ case "$1" in
 	$0 start
 	;;
   reload)
-	if [ -f /var/lock/subsys/syslog ]; then
+	if [ -f /var/lock/subsys/syslog-ng ]; then
 		msg_reloading "syslog-ng"
 		killproc syslog-ng -HUP
 	else
@@ -68,10 +68,6 @@ case "$1" in
 	;;
   force-reload)
 	$0 reload
-	exit $?
-
-	# or if it doesn't
-	$0 stop && $0 start
 	exit $?
 	;;
   *)
