@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# syslog        Starts syslog-nd (syslogd replacment).
+# syslog        Starts syslog-ng (syslogd replacment).
 #
 # chkconfig:	2345 30 70
 # description:	Syslog is the facility by which many daemons use to log \
