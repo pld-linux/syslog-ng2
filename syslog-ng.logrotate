@@ -1,77 +1,66 @@
 /var/log/messages {
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/etc/rc.d/init.d/klogd restart >/dev/null 2>&1
     endscript
 }
 
 /var/log/daemon {
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/etc/rc.d/init.d/klogd restart >/dev/null 2>&1
     endscript
 }
 
 /var/log/debug {
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/etc/rc.d/init.d/klogd restart >/dev/null 2>&1
     endscript
 }
 
 /var/log/iptables {
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/etc/rc.d/init.d/klogd restart >/dev/null 2>&1
     endscript
 }
 
 /var/log/kernel {
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/etc/rc.d/init.d/klogd restart >/dev/null 2>&1
     endscript
 }
 
 /var/log/lpr {
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/etc/rc.d/init.d/klogd restart >/dev/null 2>&1
     endscript
 }
 
 /var/log/maillog {
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/etc/rc.d/init.d/klogd restart >/dev/null 2>&1
     endscript
 }
 
 /var/log/secure {
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/etc/rc.d/init.d/klogd restart >/dev/null 2>&1
     endscript
 }
 
 /var/log/spooler {
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/etc/rc.d/init.d/klogd restart >/dev/null 2>&1
     endscript
 }
 
 /var/log/syslog {
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/etc/rc.d/init.d/klogd restart >/dev/null 2>&1
     endscript
 }
 
 /var/log/user {
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/etc/rc.d/init.d/klogd restart >/dev/null 2>&1
     endscript
 }
 
@@ -79,6 +68,5 @@
     olddir /var/log/archiv/mail
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-	/etc/rc.d/init.d/klogd restart >/dev/null 2>&1
     endscript
 }
