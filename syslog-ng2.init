@@ -41,10 +41,10 @@ case "$1" in
 	fi
 	;;
     stop)	
-	if [ -f /var/lock/subsys/syslogd ]; then
+	if [ -f /var/lock/subsys/syslog ]; then
 		msg_stopping "syslog-ng"
 		killproc syslog-ng
-		rm -f /var/lock/subsys/syslog- >/dev/null 2>&1
+		rm -f /var/lock/subsys/syslog >/dev/null 2>&1
 	else
 		msg_Not_Running syslog-ng
 		exit 1
