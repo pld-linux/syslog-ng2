@@ -1,10 +1,28 @@
-/var/log/messages {
+/var/log/daemon {
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
     endscript
 }
 
-/var/log/secure {
+/var/log/debug {
+    postrotate
+	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
+    endscript
+}
+
+/var/log/iptables {
+    postrotate
+	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
+    endscript
+}
+
+/var/log/kernel {
+    postrotate
+	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
+    endscript
+}
+
+/var/log/lpr {
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
     endscript
@@ -16,13 +34,31 @@
     endscript
 }
 
+/var/log/secure {
+    postrotate
+	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
+    endscript
+}
+
 /var/log/spooler {
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
     endscript
 }
 
-/var/log/kernel {
+/var/log/syslog {
+    postrotate
+	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
+    endscript
+}
+
+/var/log/user {
+    postrotate
+	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
+    endscript
+}
+
+/var/log/mail/* {
     postrotate
 	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
     endscript
