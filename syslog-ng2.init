@@ -59,12 +59,8 @@ case "$1" in
 	;;
   reload)
 	if [ -f /var/lock/subsys/syslog ]; then
-		msg_show syslog-ng
-		msg_reload
-		busy
+		msg_reloading "syslog-ng"
 		killproc syslog-ng -HUP
-		deltext
-		ok		
 	else
 		msg_Not_Running syslog-ng
 		exit 1
