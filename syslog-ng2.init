@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# syslog        Starts syslog-ng (syslogd replacment).
+# syslog	Starts syslog-ng (syslogd replacment).
 #
 # chkconfig:	2345 30 70
 # description:	Syslog is the facility by which many daemons use to log \
@@ -13,7 +13,7 @@
 # Get network config
 . /etc/sysconfig/network
 
-# Set defaults        
+# Set defaults	
 ENABLE_RECEIVE_FROM_NET=no
 HOSTLIST=""
 DOMAINLIST=""
@@ -24,8 +24,9 @@ MARK_TIMESTAMP=""
 
 # Get service config
 if [ -f /etc/sysconfig/syslog-ng ] ; then
-        . /etc/sysconfig/syslog-ng
+	. /etc/sysconfig/syslog-ng
 fi
+
 
 # See how we were called.
 case "$1" in
@@ -40,7 +41,7 @@ case "$1" in
 		msg_already_running "syslog-ng"
 	fi
 	;;
-    stop)	
+  stop)	
 	if [ -f /var/lock/subsys/syslog-ng ]; then
 		msg_stopping "syslog-ng"
 		killproc syslog-ng
@@ -71,7 +72,7 @@ case "$1" in
 	exit $?
 	;;
   *)
-	msg_usage "$0 {start|stop|status|restart|reload|force-reload}"
+	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
 	exit 1
 esac
 
