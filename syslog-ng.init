@@ -33,7 +33,7 @@ case "$1" in
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/syslog ]; then
 		msg_starting "syslog-ng"
-		daemon syslogd-ng $OPTIONS
+		daemon syslog-ng $OPTIONS
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/syslog
 	else
