@@ -13,7 +13,7 @@
 # Get network config
 . /etc/sysconfig/network
 
-# Set defaults	
+# Set defaults
 ENABLE_RECEIVE_FROM_NET=no
 HOSTLIST=""
 DOMAINLIST=""
@@ -41,14 +41,14 @@ case "$1" in
 		msg_already_running "syslog-ng"
 	fi
 	;;
-  stop)	
+  stop)
 	if [ -f /var/lock/subsys/syslog-ng ]; then
 		msg_stopping "syslog-ng"
 		killproc syslog-ng
 		rm -f /var/lock/subsys/syslog-ng >/dev/null 2>&1
 	else
 		msg_not_running syslog-ng
-	fi	
+	fi
 	;;
   status)
 	status syslog-ng
