@@ -1,0 +1,20 @@
+--- syslog-ng-1.6.6/configure.in.orig	2005-02-04 13:27:00.000000000 +0100
++++ syslog-ng-1.6.6/configure.in	2005-02-06 15:51:45.089776184 +0100
+@@ -166,7 +166,7 @@
+ AC_CHECK_LIB(resolv, __res_init)
+ AC_CHECK_LIB(door, door_create)
+ AC_CHECK_LIB(socket, socket)
+-AC_CHECK_LIB(nsl, gethostbyname)
++AC_SEARCH_LIBS(gethostbyname, nsl)
+ AC_CHECK_FUNCS(select snprintf vsnprintf strerror inet_aton strncpy getutent)
+ AC_CHECK_FUNCS(getopt_long strcasecmp strptime)
+ 
+@@ -333,7 +333,7 @@
+ if test "$enable_full_static" = "yes"; then
+ 	LIBS="-static $LIBS $LEXLIB $LIBWRAP_LIBS $LIBNET_LIBS $LIBOL_LIBS"
+ else
+-	LIBS="$LIBS $LIBOL_LIBS -Wl,-Bstatic $LEXLIB $LIBWRAP_LIBS $LIBNET_LIBS   -Wl,-Bdynamic"
++	LIBS="$LIBS $LIBOL_LIBS $LIBWRAP_LIBS $LIBNET_LIBS -Wl,-Bstatic $LEXLIB -Wl,-Bdynamic"
+ fi
+ AC_SUBST(YFLAGS)
+ 
