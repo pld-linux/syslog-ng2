@@ -1,3 +1,13 @@
+/var/log/messages {
+    prerotate
+    	/usr/bin/killall -TSTP klogd || :
+    endscript
+    postrotate
+	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
+	/usr/bin/killall -CONT klogd || :
+    endscript
+}
+
 /var/log/daemon {
     prerotate
     	/usr/bin/killall -TSTP klogd || :
