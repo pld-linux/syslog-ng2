@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# syslog        Starts syslog-ng (syslogd replacment).
+# syslog	Starts syslog-ng (syslogd replacment).
 #
 # chkconfig:	2345 30 70
 # description:	Syslog is the facility by which many daemons use to log \
@@ -13,7 +13,7 @@
 # Get network config
 . /etc/sysconfig/network
 
-# Set defaults        
+# Set defaults
 ENABLE_RECEIVE_FROM_NET=no
 HOSTLIST=""
 DOMAINLIST=""
@@ -23,10 +23,11 @@ MARK_TIMESTAMP=""
 [ -f /etc/syslog-ng/syslog-ng.conf ] || exit 0
 
 # Get service config
-if [ -f /etc/sysconfig/syslog-ng ] ; then
-        . /etc/sysconfig/syslog-ng
+if [ -f /etc/sysconfig/syslog-ng ]; then
+	. /etc/sysconfig/syslog-ng
 fi
 
+RETVAL=0
 # See how we were called.
 case "$1" in
   start)
@@ -40,39 +41,37 @@ case "$1" in
 		msg_already_running "syslog-ng"
 	fi
 	;;
-    stop)	
+  stop)
 	if [ -f /var/lock/subsys/syslog-ng ]; then
 		msg_stopping "syslog-ng"
 		killproc syslog-ng
 		rm -f /var/lock/subsys/syslog-ng >/dev/null 2>&1
 	else
 		msg_not_running syslog-ng
-		exit 1
-	fi	
+	fi
 	;;
   status)
 	status syslog-ng
+	exit $?
 	;;
   restart)
 	$0 stop
 	$0 start
+	exit $?
 	;;
-  reload)
+  reload|force-reload)
 	if [ -f /var/lock/subsys/syslog-ng ]; then
 		msg_reloading "syslog-ng"
 		killproc syslog-ng -HUP
+		RETVAL=$?
 	else
-		msg_not_running syslog-ng
-		exit 1
+		msg_not_running syslog-ng >&2
+		exit 7
 	fi
 	;;
-  force-reload)
-	$0 reload
-	exit $?
-	;;
   *)
-	msg_usage "$0 {start|stop|status|restart|reload|force-reload}"
-	exit 1
+	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
+	exit 3
 esac
 
 exit $RETVAL
