@@ -2,7 +2,6 @@
 #
 # syslog        Starts syslog-nd (syslogd replacment).
 #
-#
 # chkconfig:	2345 30 70
 # description:	Syslog is the facility by which many daemons use to log \
 #		messages to various system log files. It is a good idea to \
@@ -33,27 +32,55 @@ case "$1" in
   start)
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/syslog ]; then
-		show Starting system loggers
+		msg_starting "syslog-ng"
 		daemon syslogd-ng $OPTIONS
-		touch /var/lock/subsys/syslog
+		RETVAL=$?
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/syslog
 	else
-		echo "system loggers already are running"
+		msg_Already_Running "syslog-ng"
 	fi
 	;;
     stop)	
-	show Stopping system loggers
-	rm -f /var/lock/subsys/syslog
+	if [ -f /var/lock/subsys/syslogd ]; then
+		msg_stopping "syslog-ng"
+		killproc syslog-ng
+		rm -f /var/lock/subsys/syslog- >/dev/null 2>&1
+	else
+		msg_Not_Running syslog-ng
+		exit 1
+	fi	
 	;;
   status)
-	status syslogd
+	status syslog-ng
 	;;
-  restart|reload)
+  restart)
 	$0 stop
 	$0 start
 	;;
+  reload)
+	if [ -f /var/lock/subsys/syslog ]; then
+		msg_show syslog-ng
+		msg_reload
+		busy
+		killproc syslog-ng -HUP
+		deltext
+		ok		
+	else
+		msg_Not_Running syslog-ng
+		exit 1
+	fi
+	;;
+  force-reload)
+	$0 reload
+	exit $?
+
+	# or if it doesn't
+	$0 stop && $0 start
+	exit $?
+	;;
   *)
-	echo "Usage: $0 {start|stop|status|restart|reload}"
+	msg_Usage "$0 {start|stop|status|restart|reload|force-reload}"
 	exit 1
 esac
 
-exit 0
+exit $RETVAL
