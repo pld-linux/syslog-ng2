@@ -10,9 +10,6 @@
 # Source function library
 . /etc/rc.d/init.d/functions
 
-# Get network config
-. /etc/sysconfig/network
-
 # Set defaults
 ENABLE_RECEIVE_FROM_NET=no
 HOSTLIST=""
