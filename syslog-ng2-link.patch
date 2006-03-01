@@ -1,20 +1,11 @@
 --- syslog-ng-1.6.8/configure.in.orig	2005-05-26 10:33:54.000000000 +0200
 +++ syslog-ng-1.6.8/configure.in	2005-05-26 19:08:55.827602272 +0200
 @@ -170,7 +170,7 @@
- AC_CHECK_LIB(resolv, __res_init)
+ dnl Checks for library functions.
  AC_CHECK_LIB(door, door_create)
  AC_CHECK_LIB(socket, socket)
 -AC_CHECK_LIB(nsl, gethostbyname)
 +AC_SEARCH_LIBS(gethostbyname, nsl)
- AC_CHECK_FUNCS(select snprintf vsnprintf strerror inet_aton strncpy getutent)
- AC_CHECK_FUNCS(getopt_long strcasecmp strptime)
+ AC_CHECK_LIB(regex, regexec)
  
-@@ -361,7 +361,7 @@
- elif test "$enable_full_dynamic" = "yes"; then
- 	LIBS="$LIBS $LEXLIB $LIBWRAP_LIBS $LIBNET_LIBS $LIBOL_LIBS"
- else
--	LIBS="$LIBS $LIBOL_LIBS $LD_START_STATIC $LEXLIB $LIBWRAP_LIBS $LIBNET_LIBS   $LD_END_STATIC"
-+	LIBS="$LIBS $LIBOL_LIBS $LIBWRAP_LIBS $LIBNET_LIBS $LD_START_STATIC $LEXLIB $LD_END_STATIC"
- fi
- 
- AC_SUBST(YFLAGS)
+ AC_CHECK_FUNCS(strdup strtol inet_aton inet_ntoa getopt_long)
