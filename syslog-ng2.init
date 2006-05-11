@@ -16,9 +16,6 @@ HOSTLIST=""
 DOMAINLIST=""
 MARK_TIMESTAMP=""
 
-[ -f /usr/sbin/syslog-ng ] || exit 0
-[ -f /etc/syslog-ng/syslog-ng.conf ] || exit 0
-
 # Get service config
 if [ -f /etc/sysconfig/syslog-ng ]; then
 	. /etc/sysconfig/syslog-ng
