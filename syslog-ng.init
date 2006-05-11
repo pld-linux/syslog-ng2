@@ -21,6 +21,10 @@ if [ -f /etc/sysconfig/syslog-ng ]; then
 	. /etc/sysconfig/syslog-ng
 fi
 
+configtest() {
+	syslog-ng $OPTIONS -s
+}
+
 RETVAL=0
 # See how we were called.
 case "$1" in
@@ -49,15 +53,33 @@ case "$1" in
 	exit $?
 	;;
   restart)
-	$0 stop
-	$0 start
+	configtest
+	RETVAL=$?
+	if [ $RETVAL -eq 0 ]; then
+		$0 stop
+		$0 start
+		RETVAL=$?
+	else
+		fail
+		echo >&2 "Configuration file syntax test failed."
+	fi
+	;;
+  configtest)
+	configtest
 	exit $?
 	;;
   reload|force-reload)
 	if [ -f /var/lock/subsys/syslog-ng ]; then
 		msg_reloading "syslog-ng"
-		killproc syslog-ng -HUP
+		configtest
 		RETVAL=$?
+		if [ $RETVAL -eq 0 ]; then
+			killproc syslog-ng -HUP
+			RETVAL=$?
+		else
+			fail
+			echo >&2 "Configuration file syntax test failed."
+		fi
 	else
 		msg_not_running syslog-ng >&2
 		exit 7
