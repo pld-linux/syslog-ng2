@@ -1,11 +1,17 @@
---- syslog-ng-1.6.8/configure.in.orig	2005-05-26 10:33:54.000000000 +0200
-+++ syslog-ng-1.6.8/configure.in	2005-05-26 19:08:55.827602272 +0200
-@@ -170,7 +170,7 @@
+--- syslog-ng-1.9.11/configure.in.orig	2006-05-01 14:30:08.000000000 +0200
++++ syslog-ng-1.9.11/configure.in	2006-05-25 19:55:09.003388750 +0200
+@@ -125,10 +125,10 @@
+ 
  dnl Checks for library functions.
  AC_CHECK_LIB(door, door_create)
- AC_CHECK_LIB(socket, socket)
+-AC_CHECK_LIB(socket, socket)
+-AC_CHECK_LIB(rt, nanosleep)
 -AC_CHECK_LIB(nsl, gethostbyname)
+-AC_CHECK_LIB(regex, regexec)
++AC_SEARCH_LIBS(socket, socket)
++AC_SEARCH_LIBS(nanosleep, rt)
 +AC_SEARCH_LIBS(gethostbyname, nsl)
- AC_CHECK_LIB(regex, regexec)
++AC_SEARCH_LIBS(regexec, regex)
  
- AC_CHECK_FUNCS(strdup strtol inet_aton inet_ntoa getopt_long)
+ AC_CHECK_FUNCS(strdup strtol inet_aton inet_ntoa getopt_long getaddrinfo)
+ 
