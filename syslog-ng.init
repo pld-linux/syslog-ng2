@@ -81,7 +81,7 @@ case "$1" in
 			echo >&2 "Configuration file syntax test failed."
 		fi
 	else
-		msg_not_running syslog-ng >&2
+		msg_not_running syslog-ng
 		exit 7
 	fi
 	;;
