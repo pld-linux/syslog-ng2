@@ -25,10 +25,7 @@ configtest() {
 	syslog-ng $OPTIONS -s
 }
 
-RETVAL=0
-# See how we were called.
-case "$1" in
-  start)
+start() {
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/syslog-ng ]; then
 		msg_starting "syslog-ng"
@@ -38,8 +35,9 @@ case "$1" in
 	else
 		msg_already_running "syslog-ng"
 	fi
-	;;
-  stop)
+}
+
+stop() {
 	if [ -f /var/lock/subsys/syslog-ng ]; then
 		msg_stopping "syslog-ng"
 		killproc syslog-ng
@@ -47,18 +45,23 @@ case "$1" in
 	else
 		msg_not_running syslog-ng
 	fi
+}
+
+RETVAL=0
+# See how we were called.
+case "$1" in
+  start)
+  	start
 	;;
-  status)
-	status syslog-ng
-	exit $?
+  stop)
+  	stop
 	;;
   restart)
 	configtest
 	RETVAL=$?
 	if [ $RETVAL -eq 0 ]; then
-		$0 stop
-		$0 start
-		RETVAL=$?
+		stop
+		start
 	else
 		fail
 		echo >&2 "Configuration file syntax test failed."
@@ -84,6 +87,24 @@ case "$1" in
 		msg_not_running syslog-ng
 		exit 7
 	fi
+	;;
+  flush-logs)
+	if [ -f /var/lock/subsys/syslog-ng ]; then
+		msg_reloading "syslog-ng"
+		configtest
+		RETVAL=$?
+		if [ $RETVAL -eq 0 ]; then
+			killproc syslog-ng -HUP
+			RETVAL=$?
+		else
+			fail
+			echo >&2 "Configuration file syntax test failed."
+		fi
+	fi
+	;;
+  status)
+	status syslog-ng
+	exit $?
 	;;
   *)
 	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
