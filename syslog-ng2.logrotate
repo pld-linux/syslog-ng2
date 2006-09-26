@@ -12,6 +12,6 @@
 /var/log/xferlog {
 	sharedscripts
     postrotate
-		/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
+		/sbin/service syslog-ng flush-logs >/dev/null
     endscript
 }
