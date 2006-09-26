@@ -1,71 +1,17 @@
-/var/log/messages {
-    postrotate
-	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-    endscript
-}
-
-/var/log/daemon {
-    postrotate
-	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-    endscript
-}
-
-/var/log/debug {
-    postrotate
-	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-    endscript
-}
-
-/var/log/iptables {
-    postrotate
-	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-    endscript
-}
-
-/var/log/kernel {
-    postrotate
-	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-    endscript
-}
-
-/var/log/lpr {
-    postrotate
-	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-    endscript
-}
-
-/var/log/maillog {
-    postrotate
-	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-    endscript
-}
-
-/var/log/secure {
-    postrotate
-	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-    endscript
-}
-
-/var/log/spooler {
-    postrotate
-	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-    endscript
-}
-
-/var/log/syslog {
-    postrotate
-	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-    endscript
-}
-
-/var/log/user {
-    postrotate
-	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
-    endscript
-}
-
+/var/log/messages
+/var/log/daemon
+/var/log/debug
+/var/log/iptables
+/var/log/kernel
+/var/log/lpr
+/var/log/maillog
+/var/log/secure
+/var/log/spooler
+/var/log/syslog
+/var/log/user
 /var/log/xferlog {
+	sharedscripts
     postrotate
-	/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
+		/etc/rc.d/init.d/syslog-ng reload >/dev/null 2>&1
     endscript
 }
