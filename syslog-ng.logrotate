@@ -11,7 +11,8 @@
 /var/log/user
 /var/log/xferlog {
 	sharedscripts
-    postrotate
+	
+	postrotate
 		/sbin/service syslog-ng flush-logs >/dev/null
-    endscript
+	endscript
 }
