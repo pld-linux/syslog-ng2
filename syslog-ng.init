@@ -22,7 +22,7 @@ if [ -f /etc/sysconfig/syslog-ng ]; then
 fi
 
 configtest() {
-	syslog-ng $OPTIONS -s
+	syslog-ng $OPTIONS -s || exit 1
 }
 
 start() {
@@ -57,15 +57,9 @@ case "$1" in
   	stop
 	;;
   restart)
-	configtest
-	RETVAL=$?
-	if [ $RETVAL -eq 0 ]; then
-		stop
-		start
-	else
-		fail
-		echo >&2 "Configuration file syntax test failed."
-	fi
+	configtest 
+	stop
+	start
 	;;
   configtest)
 	configtest
