@@ -22,7 +22,7 @@ if [ -f /etc/sysconfig/syslog-ng ]; then
 fi
 
 configtest() {
-	syslog-ng $OPTIONS -s || exit 1
+	syslog-ng $OPTIONS -F -s -p /var/run/syslog-ng-syntaxcheck.pid || exit 1
 }
 
 start() {
