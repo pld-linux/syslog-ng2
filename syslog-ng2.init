@@ -83,6 +83,18 @@ reload() {
 	fi
 }
 
+flush-logs() {
+	if [ -f /var/lock/subsys/syslog-ng ]; then
+		configtest
+		msg_reloading "syslog-ng"
+		killproc syslog-ng -HUP
+		RETVAL=$?
+	else
+		msg_not_running "syslog-ng"
+		exit 7
+	fi
+}
+
 RETVAL=0
 # See how we were called.
 case "$1" in
@@ -104,12 +116,7 @@ case "$1" in
   	reload
 	;;
   flush-logs)
-	if [ -f /var/lock/subsys/syslog-ng ]; then
-		configtest
-		msg_reloading "syslog-ng"
-		killproc syslog-ng -HUP
-		RETVAL=$?
-	fi
+  	flush-logs
 	;;
   configtest)
 	show "Checking syslog-ng config syntax"
