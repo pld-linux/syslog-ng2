@@ -21,8 +21,21 @@ if [ -f /etc/sysconfig/syslog-ng ]; then
 	. /etc/sysconfig/syslog-ng
 fi
 
+checkconfig() {
+	syslog-ng $OPTIONS -F -s -p /var/run/syslog-ng-syntaxcheck.pid
+	RETVAL=$?
+	return $RETVAL
+}
+
 configtest() {
-	syslog-ng $OPTIONS -F -s -p /var/run/syslog-ng-syntaxcheck.pid || exit 1
+	checkconfig 2>/dev/null
+	RETVAL=$?
+	if [ $RETVAL != 0 ]; then
+		show "Checking syslog-ng config syntax"
+		fail
+		echo >&2 "Configuration file syntax test failed. Run $0 configtest to see errors."
+		exit $RETVAL
+	fi
 }
 
 start() {
@@ -77,16 +90,10 @@ case "$1" in
 	;;
   reload|force-reload)
 	if [ -f /var/lock/subsys/syslog-ng ]; then
-		msg_reloading "syslog-ng"
 		configtest
+		msg_reloading "syslog-ng"
+		killproc syslog-ng -HUP
 		RETVAL=$?
-		if [ $RETVAL -eq 0 ]; then
-			killproc syslog-ng -HUP
-			RETVAL=$?
-		else
-			fail
-			echo >&2 "Configuration file syntax test failed."
-		fi
 	else
 		msg_not_running "syslog-ng"
 		exit 7
@@ -94,21 +101,18 @@ case "$1" in
 	;;
   flush-logs)
 	if [ -f /var/lock/subsys/syslog-ng ]; then
-		msg_reloading "syslog-ng"
 		configtest
+		msg_reloading "syslog-ng"
+		killproc syslog-ng -HUP
 		RETVAL=$?
-		if [ $RETVAL -eq 0 ]; then
-			killproc syslog-ng -HUP
-			RETVAL=$?
-		else
-			fail
-			echo >&2 "Configuration file syntax test failed."
-		fi
 	fi
 	;;
   configtest)
-	configtest
-	exit $?
+	show "Checking syslog-ng config syntax"
+	res=$(checkconfig 2>&1)
+	RETVAL=$?
+	[ $RETVAL = 0 ] && ok || fail
+	echo >&2 "$res"
 	;;
   status)
 	status syslog-ng
