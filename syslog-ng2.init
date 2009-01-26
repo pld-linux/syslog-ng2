@@ -62,11 +62,24 @@ stop() {
 
 condrestart() {
 	if [ -f /var/lock/subsys/syslog-ng ]; then
+		configtest
 		stop
 		start
 	else
 		msg_not_running "syslog-ng"
 		RETVAL=$1
+	fi
+}
+
+reload() {
+	if [ -f /var/lock/subsys/syslog-ng ]; then
+		configtest
+		msg_reloading "syslog-ng"
+		killproc syslog-ng -HUP
+		RETVAL=$?
+	else
+		msg_not_running "syslog-ng"
+		exit 7
 	fi
 }
 
@@ -85,19 +98,10 @@ case "$1" in
 	start
 	;;
   try-restart)
-	configtest
 	condrestart 0
 	;;
   reload|force-reload)
-	if [ -f /var/lock/subsys/syslog-ng ]; then
-		configtest
-		msg_reloading "syslog-ng"
-		killproc syslog-ng -HUP
-		RETVAL=$?
-	else
-		msg_not_running "syslog-ng"
-		exit 7
-	fi
+  	reload
 	;;
   flush-logs)
 	if [ -f /var/lock/subsys/syslog-ng ]; then
