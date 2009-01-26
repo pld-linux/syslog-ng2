@@ -43,7 +43,7 @@ stop() {
 		killproc syslog-ng
 		rm -f /var/lock/subsys/syslog-ng >/dev/null 2>&1
 	else
-		msg_not_running syslog-ng
+		msg_not_running "syslog-ng"
 	fi
 }
 
@@ -52,7 +52,7 @@ condrestart() {
 		stop
 		start
 	else
-		msg_not_running syslog-ng
+		msg_not_running "syslog-ng"
 		RETVAL=$1
 	fi
 }
@@ -88,7 +88,7 @@ case "$1" in
 			echo >&2 "Configuration file syntax test failed."
 		fi
 	else
-		msg_not_running syslog-ng
+		msg_not_running "syslog-ng"
 		exit 7
 	fi
 	;;
