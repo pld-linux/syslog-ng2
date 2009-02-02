@@ -83,7 +83,7 @@ reload() {
 	fi
 }
 
-flush-logs() {
+flush_logs() {
 	if [ -f /var/lock/subsys/syslog-ng ]; then
 		configtest
 		msg_reloading "syslog-ng"
@@ -117,7 +117,7 @@ case "$1" in
   	reload
 	;;
   flush-logs)
-  	flush-logs
+  	flush_logs
 	;;
   configtest)
 	show "Checking syslog-ng config syntax"
