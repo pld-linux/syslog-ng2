@@ -1,9 +1,9 @@
 #
-# TODO:	upgrade to 2.1 or 3.0.1
+# TODO:	upgrade to 2.1
 #
 # Conditional build:
 %bcond_with	dynamic		# link dynamically with glib and eventlog
-#
+%define		pkg_name	syslog-ng2
 Summary:	Syslog-ng - new generation of the system logger
 Summary(pl.UTF-8):	Syslog-ng - zamiennik syskloga
 Summary(pt_BR.UTF-8):	Daemon de log nova geração
@@ -14,11 +14,11 @@ License:	GPL v2
 Group:		Daemons
 Source0:	http://www.balabit.com/downloads/files/syslog-ng/sources/2.0/src/%{name}-%{version}.tar.gz
 # Source0-md5:	3f96ccf13dda0b9e150e511bcffde795
-Source1:	%{name}.init
-Source2:	%{name}.conf
-Source3:	%{name}.logrotate
-Patch0:		%{name}-link.patch
-Patch1:		%{name}-datadir.patch
+Source1:	%{pkg_name}.init
+Source2:	%{pkg_name}.conf
+Source3:	%{pkg_name}.logrotate
+Patch0:		%{pkg_name}-link.patch
+Patch1:		%{pkg_name}-datadir.patch
 URL:		http://www.balabit.com/products/syslog_ng/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
@@ -48,7 +48,7 @@ Conflicts:	msyslog
 Conflicts:	syslog
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%description
+%description -n %{pkg_name}
 syslog-ng is a syslogd replacement for Unix and Unix-like systems. It
 has been tested on Solaris, BSDi and Linux, and were found to run
 reliably. syslog-ng gives you a much enhanced configuration scheme,
@@ -59,12 +59,12 @@ simple file to a network connection. syslog-ng supports TCP
 logforwarding, together with hashing to prevent unauthorized
 modification on the line.
 
-%description -l pl.UTF-8
+%description -n %{pkg_name} -l pl.UTF-8
 Syslog-ng jest zamiennikiem dla standardowo używanych programów typu
 syslog. Działa w systemie SunOS, BSD, Linux. Daje znacznie większe
 możliwości logowania i kontrolowania zbieranych informacji.
 
-%description -l pt_BR.UTF-8
+%description -n %{pkg_name} -l pt_BR.UTF-8
 Syslog-ng é um substituto para o syslog tradicional, mas com diversas
 melhorias, como, por exemplo, a habilidade de filtrar mensagens de log
 por seu conteúdo (usando expressões regulares) e não apenas pelo par
@@ -127,7 +127,7 @@ if [ "$1" = "0" ]; then
 	/sbin/chkconfig --del syslog-ng
 fi
 
-%files
+%files -n %{pkg_name}
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS debian/syslog-ng.conf* contrib/{relogger.pl,syslog-ng.vim}
 %doc doc/examples/syslog-ng.conf.sample doc/reference/syslog-ng.txt* contrib/syslog-ng.conf.{doc,RedHat}
