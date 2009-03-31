@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# syslog	Starts syslog-ng (syslogd replacement).
+# syslog	Starts syslog-ng (syslogd replacment).
 #
 # chkconfig:	2345 30 70
 # description:	Syslog is the facility by which many daemons use to log \
@@ -21,28 +21,15 @@ if [ -f /etc/sysconfig/syslog-ng ]; then
 	. /etc/sysconfig/syslog-ng
 fi
 
-checkconfig() {
-	syslog-ng $OPTIONS -F -s -p /var/run/syslog-ng-syntaxcheck.pid
-	RETVAL=$?
-	return $RETVAL
-}
-
 configtest() {
-	checkconfig 2>/dev/null
-	RETVAL=$?
-	if [ $RETVAL != 0 ]; then
-		show "Checking syslog-ng config syntax"
-		fail
-		echo >&2 "Configuration file syntax test failed. Run $0 configtest to see errors."
-		exit $RETVAL
-	fi
+	syslog-ng $OPTIONS -s || exit 1
 }
 
 start() {
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/syslog-ng ]; then
 		msg_starting "syslog-ng"
-		daemon /usr/sbin/syslog-ng -f /etc/syslog-ng/syslog-ng.conf $OPTIONS
+		daemon syslog-ng $OPTIONS
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/syslog-ng
 	else
@@ -56,42 +43,7 @@ stop() {
 		killproc syslog-ng
 		rm -f /var/lock/subsys/syslog-ng >/dev/null 2>&1
 	else
-		msg_not_running "syslog-ng"
-	fi
-}
-
-condrestart() {
-	if [ -f /var/lock/subsys/syslog-ng ]; then
-		configtest
-		stop
-		start
-	else
-		msg_not_running "syslog-ng"
-		RETVAL=$1
-	fi
-}
-
-reload() {
-	if [ -f /var/lock/subsys/syslog-ng ]; then
-		configtest
-		msg_reloading "syslog-ng"
-		killproc syslog-ng -HUP
-		RETVAL=$?
-	else
-		msg_not_running "syslog-ng"
-		exit 7
-	fi
-}
-
-flush_logs() {
-	if [ -f /var/lock/subsys/syslog-ng ]; then
-		configtest
-		msg_reloading "syslog-ng"
-		killproc syslog-ng -HUP
-		RETVAL=$?
-	else
-		msg_not_running "syslog-ng"
-		exit 7
+		msg_not_running syslog-ng
 	fi
 }
 
@@ -99,39 +51,57 @@ RETVAL=0
 # See how we were called.
 case "$1" in
   start)
-	configtest
-	start
+  	start
 	;;
   stop)
-	stop
+  	stop
 	;;
   restart)
-	configtest
+	configtest 
 	stop
 	start
 	;;
-  try-restart)
-	condrestart 0
+  configtest)
+	configtest
+	exit $?
 	;;
   reload|force-reload)
-  	reload
+	if [ -f /var/lock/subsys/syslog-ng ]; then
+		msg_reloading "syslog-ng"
+		configtest
+		RETVAL=$?
+		if [ $RETVAL -eq 0 ]; then
+			killproc syslog-ng -HUP
+			RETVAL=$?
+		else
+			fail
+			echo >&2 "Configuration file syntax test failed."
+		fi
+	else
+		msg_not_running syslog-ng
+		exit 7
+	fi
 	;;
   flush-logs)
-  	flush_logs
-	;;
-  configtest)
-	show "Checking syslog-ng config syntax"
-	res=$(checkconfig 2>&1)
-	RETVAL=$?
-	[ $RETVAL = 0 ] && ok || fail
-	echo >&2 "$res"
+	if [ -f /var/lock/subsys/syslog-ng ]; then
+		msg_reloading "syslog-ng"
+		configtest
+		RETVAL=$?
+		if [ $RETVAL -eq 0 ]; then
+			killproc syslog-ng -HUP
+			RETVAL=$?
+		else
+			fail
+			echo >&2 "Configuration file syntax test failed."
+		fi
+	fi
 	;;
   status)
 	status syslog-ng
 	exit $?
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|try-restart|reload|force-reload|status|configtest|flush-logs}"
+	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
 	exit 3
 esac
 

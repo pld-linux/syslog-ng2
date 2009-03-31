@@ -1,16 +1,12 @@
 diff -ur syslog-ng-2.0.6.orig/src/syslog-ng.h syslog-ng-2.0.6/src/syslog-ng.h
 --- syslog-ng-2.0.6.orig/src/syslog-ng.h	2007-09-22 16:16:15.000000000 +0200
 +++ syslog-ng-2.0.6/src/syslog-ng.h	2007-12-08 08:25:22.000000000 +0100
-@@ -50,9 +50,9 @@
- #define PATH_SYSLOGNG           PATH_PREFIX "/libexec/syslog-ng"
- #endif
+@@ -38,7 +38,7 @@
  
+ #define PATH_SYSLOG_NG_CONF     PATH_SYSCONFDIR "/syslog-ng.conf"
+ #define PATH_PIDFILE            "/var/run/syslog-ng.pid"
 -#define PATH_PERSIST_CONFIG     PATH_LOCALSTATEDIR "/syslog-ng.persist"
--#define PATH_QDISK              PATH_LOCALSTATEDIR
--#define PATH_PATTERNDB_FILE     PATH_LOCALSTATEDIR "/patterndb.xml"
 +#define PATH_PERSIST_CONFIG     "/var/lib/syslog-ng/syslog-ng.persist"
-+#define PATH_QDISK              "/var/lib/syslog-ng"
-+#define PATH_PATTERNDB_FILE     "/var/lib/syslog-ng/patterndb.xml"
  
  #define LOG_PRIORITY_LISTEN 0
  #define LOG_PRIORITY_READER 0

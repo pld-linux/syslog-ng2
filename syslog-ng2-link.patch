@@ -1,13 +1,18 @@
 --- syslog-ng-2.0.3/configure.in.orig	2007-03-04 10:58:00.000000000 +0100
 +++ syslog-ng-2.0.3/configure.in	2007-04-03 23:53:53.219462987 +0200
-@@ -265,9 +265,8 @@
- AC_CHECK_LIB(door, door_create, BASE_LIBS="$BASE_LIBS -ldoor")
- AC_CHECK_LIB(socket, socket, BASE_LIBS="$BASE_LIBS -lsocket")
- AC_CHECK_LIB(rt, nanosleep, BASE_LIBS="$BASE_LIBS -lrt")
--AC_CHECK_LIB(nsl, gethostbyname, BASE_LIBS="$BASE_LIBS -lnsl")
-+AC_CHECK_LIB(resolv, gethostbyname, BASE_LIBS="$BASE_LIBS -lresolv")
- AC_CHECK_LIB(regex, regexec, REGEX_LIBS="-lregex")
--AC_CHECK_LIB(resolv, res_init, RESOLV_LIBS="-lresolv")
+@@ -149,11 +149,10 @@
  
- if test "x$enable_linux_caps" = "xyes" -o "x$enable_linux_caps" = "xauto"; then
- 	AC_CHECK_LIB(cap, cap_set_proc, LIBCAP_LIBS="-lcap")
+ dnl Checks for library functions.
+ AC_CHECK_LIB(door, door_create)
+-AC_CHECK_LIB(socket, socket)
+-AC_CHECK_LIB(rt, nanosleep)
+-AC_CHECK_LIB(nsl, gethostbyname)
+-AC_CHECK_LIB(regex, regexec)
+-AC_CHECK_LIB(resolv, res_init)
++AC_SEARCH_LIBS(socket, socket)
++AC_SEARCH_LIBS(nanosleep, rt)
++AC_SEARCH_LIBS(gethostbyname, nsl resolv)
++AC_SEARCH_LIBS(regexec, regex)
+ 
+ AC_CHECK_FUNCS(strdup strtol inet_aton inet_ntoa getopt_long getaddrinfo getutent)
+ 
