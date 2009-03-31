@@ -7,18 +7,18 @@
 Summary:	Syslog-ng - new generation of the system logger
 Summary(pl.UTF-8):	Syslog-ng - zamiennik syskloga
 Summary(pt_BR.UTF-8):	Daemon de log nova geração
-Name:		syslog-ng
+Name:		syslog-ng2
 Version:	2.0.10
 Release:	2
 License:	GPL v2
 Group:		Daemons
-Source0:	http://www.balabit.com/downloads/files/syslog-ng/sources/2.0/src/%{name}-%{version}.tar.gz
+Source0:	http://www.balabit.com/downloads/files/syslog-ng/sources/2.0/src/syslog-ng-%{version}.tar.gz
 # Source0-md5:	3f96ccf13dda0b9e150e511bcffde795
-Source1:	%{pkg_name}.init
-Source2:	%{pkg_name}.conf
-Source3:	%{pkg_name}.logrotate
-Patch0:		%{pkg_name}-link.patch
-Patch1:		%{pkg_name}-datadir.patch
+Source1:	%{name}.init
+Source2:	%{name}.conf
+Source3:	%{name}.logrotate
+Patch0:		%{name}-link.patch
+Patch1:		%{name}-datadir.patch
 URL:		http://www.balabit.com/products/syslog_ng/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
@@ -46,9 +46,10 @@ Provides:	syslogdaemon
 Conflicts:	klogd
 Conflicts:	msyslog
 Conflicts:	syslog
+Conflicts:	syslog-ng
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%description -n %{pkg_name}
+%description
 syslog-ng is a syslogd replacement for Unix and Unix-like systems. It
 has been tested on Solaris, BSDi and Linux, and were found to run
 reliably. syslog-ng gives you a much enhanced configuration scheme,
@@ -59,19 +60,19 @@ simple file to a network connection. syslog-ng supports TCP
 logforwarding, together with hashing to prevent unauthorized
 modification on the line.
 
-%description -n %{pkg_name} -l pl.UTF-8
+%description -l pl.UTF-8
 Syslog-ng jest zamiennikiem dla standardowo używanych programów typu
 syslog. Działa w systemie SunOS, BSD, Linux. Daje znacznie większe
 możliwości logowania i kontrolowania zbieranych informacji.
 
-%description -n %{pkg_name} -l pt_BR.UTF-8
+%description -l pt_BR.UTF-8
 Syslog-ng é um substituto para o syslog tradicional, mas com diversas
 melhorias, como, por exemplo, a habilidade de filtrar mensagens de log
 por seu conteúdo (usando expressões regulares) e não apenas pelo par
 facility/prioridade como o syslog original.
 
 %prep
-%setup -q
+%setup -q -n syslog-ng-%{version}
 %patch0 -p1
 %patch1 -p1
 
@@ -92,7 +93,7 @@ facility/prioridade como o syslog original.
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{/etc/{sysconfig,logrotate.d,rc.d/init.d},%{_sysconfdir}/syslog-ng} \
-	$RPM_BUILD_ROOT/var/{log,lib/%{name}}
+	$RPM_BUILD_ROOT/var/{log,lib/syslog-ng}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -105,7 +106,7 @@ for n in daemon debug iptables kernel lpr maillog messages secure spooler syslog
 do
 	> $RPM_BUILD_ROOT/var/log/$n
 done
-touch $RPM_BUILD_ROOT/etc/sysconfig/%{name}
+touch $RPM_BUILD_ROOT/etc/sysconfig/syslog-ng
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -127,19 +128,19 @@ if [ "$1" = "0" ]; then
 	/sbin/chkconfig --del syslog-ng
 fi
 
-%files -n %{pkg_name}
+%files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS debian/syslog-ng.conf* contrib/{relogger.pl,syslog-ng.vim}
 %doc doc/examples/syslog-ng.conf.sample doc/reference/syslog-ng.txt* contrib/syslog-ng.conf.{doc,RedHat}
 %doc syslog-ng.html/*
-%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
+%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/syslog-ng
 %attr(750,root,root) %dir %{_sysconfdir}/syslog-ng
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/syslog-ng/syslog-ng.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/syslog-ng
 %attr(754,root,root) /etc/rc.d/init.d/syslog-ng
 %attr(755,root,root) %{_bindir}/loggen
 %attr(755,root,root) %{_sbindir}/syslog-ng
-%dir %{_var}/lib/%{name}
+%dir %{_var}/lib/syslog-ng
 %{_mandir}/man5/syslog-ng.conf.5*
 %{_mandir}/man8/syslog-ng.8*
 
