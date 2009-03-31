@@ -3,7 +3,7 @@
 #
 # Conditional build:
 %bcond_with	dynamic		# link dynamically with glib and eventlog
-%define		pkg_name	syslog-ng2
+#
 Summary:	Syslog-ng - new generation of the system logger
 Summary(pl.UTF-8):	Syslog-ng - zamiennik syskloga
 Summary(pt_BR.UTF-8):	Daemon de log nova geração
@@ -39,9 +39,9 @@ BuildRequires:	libwrap-static
 %endif
 Requires(post):	fileutils
 Requires(post,preun):	/sbin/chkconfig
-Requires:	logrotate
 Requires:	psmisc >= 20.1
 Requires:	rc-scripts >= 0.2.0
+Suggests:	logrotate
 Provides:	syslogdaemon
 Obsoletes:	syslog-ng < 3.0.0
 Conflicts:	klogd
