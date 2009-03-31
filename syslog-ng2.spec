@@ -43,6 +43,7 @@ Requires:	logrotate
 Requires:	psmisc >= 20.1
 Requires:	rc-scripts >= 0.2.0
 Provides:	syslogdaemon
+Obsoletes:	syslog-ng < 3.0.0
 Conflicts:	klogd
 Conflicts:	msyslog
 Conflicts:	syslog
