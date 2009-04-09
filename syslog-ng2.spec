@@ -9,7 +9,7 @@ Summary(pl.UTF-8):	Syslog-ng - zamiennik syskloga
 Summary(pt_BR.UTF-8):	Daemon de log nova geração
 Name:		syslog-ng2
 Version:	2.0.10
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		Daemons
 Source0:	http://www.balabit.com/downloads/files/syslog-ng/sources/2.0/src/syslog-ng-%{version}.tar.gz
@@ -111,6 +111,15 @@ touch $RPM_BUILD_ROOT/etc/sysconfig/syslog-ng
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%triggerun -- syslog-ng
+# Prevent preun from syslog-ng from working
+chmod a-x /etc/rc.d/init.d/syslog-ng
+
+%triggerpostun -- util-vserver-init
+# Restore what triggerun removed
+chmod 754 /etc/rc.d/init.d/syslog-ng
+/sbin/chkconfig --add syslog-ng
 
 %post
 for n in /var/log/{daemon,debug,iptables,kernel,lpr,maillog,messages,secure,spooler,syslog,user,xferlog}
