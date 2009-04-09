@@ -116,7 +116,7 @@ rm -rf $RPM_BUILD_ROOT
 # Prevent preun from syslog-ng from working
 chmod a-x /etc/rc.d/init.d/syslog-ng
 
-%triggerpostun -- util-vserver-init
+%triggerpostun -- syslog-ng
 # Restore what triggerun removed
 chmod 754 /etc/rc.d/init.d/syslog-ng
 /sbin/chkconfig --add syslog-ng
