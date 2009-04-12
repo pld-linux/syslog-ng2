@@ -1,0 +1,1 @@
+- change BuildRequires from libol >=0.2.4 to libol-static >= 0.2.4
