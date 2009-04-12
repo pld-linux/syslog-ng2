@@ -1,0 +1,4 @@
+- updated to 1.3.17,
+- spec adapterized.
+- gzipping %doc instead bzipping2,
+  Package builds correctly but need testing.
