@@ -3,6 +3,7 @@
 #
 # Conditional build:
 %bcond_with	dynamic		# link dynamically with glib and eventlog
+%bcond_without	tests
 #
 Summary:	Syslog-ng - new generation of the system logger
 Summary(pl.UTF-8):	Syslog-ng - zamiennik syskloga
@@ -90,6 +91,8 @@ facility/prioridade como o syslog original.
 %endif
 
 %{__make}
+
+%{?with_tests:%{__make} check}
 
 %install
 rm -rf $RPM_BUILD_ROOT
