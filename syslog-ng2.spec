@@ -75,8 +75,8 @@ facility/prioridade como o syslog original.
 
 %prep
 %setup -q -n syslog-ng-%{version}
-%patch0 -p1
-%patch1 -p1
+%patch -P0 -p1
+%patch -P1 -p1
 
 %{__tar} xzf doc/reference/syslog-ng.html.tar.gz
 
